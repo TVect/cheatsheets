@@ -177,3 +177,13 @@ kubectl exec -it pod_name /bin/sh
 ```
 kubectl exec -it pod_name -c container_name /bin/sh
 ```
+
+## Access Control
+
+- How do you test that the Service Account has access to the resources?
+
+    You can combine two features of kubectl:
+
+    - User-impersonation with `kubectl <verb> <resource> --as=jenkins`.
+
+    - Verifying API access with `kubectl auth can-i <verb> <resource>`.
