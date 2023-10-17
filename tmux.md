@@ -135,3 +135,49 @@ See `message-command-style` in the man page.
     setw -g window-status-current-format
 
     setw -g window-status-separator
+
+## 会话保存与恢复
+
+- tmux Resurrect 会话手动保存与恢复
+- tmux Continuum 会话定时保存自动恢复
+
+### 安装插件
+
+```
+# 创建目录
+mkdir ～/.tmux
+cd ~/.tmux
+
+# 下载插件
+git clone https://github.com/tmux-plugins/tmux-resurrect.git
+git clone https://github.com/tmux-plugins/tmux-continuum.git
+## 若github网速不好，则可以使用gitee镜像，使用下述命令
+git clone https://gitee.com/extra-mirrors/tmux-resurrect.git
+git clone https://gitee.com/extra-mirrors/tmux-continuum.git
+
+# 配置启用插件，编辑 ~/.tmux.conf
+vim ~/.tmux.conf
+
+# 将下述命令添加到.tmux.conf文件中
+run-shell ~/.tmux/tmux-resurrect/resurrect.tmux
+run-shell ~/.tmux/tmux-continuum/continuum.tmux
+
+# Tmux Continuum 默认每隔 15 分钟备份一次，如果你频率过高，可以设置为 1 小时一次：
+set -g @continuum-save-interval '60'
+
+# 重载配置文件使之生效
+tmux source-file ~/.tmux.conf
+```
+
+### 插件使用
+
+- 手动保存tmux会话
+  
+    前缀键(C-b) + C-s
+
+    此时 ，左下角 tmux 状态栏会显示 saving ... 字样 ， 完毕后会提示 Tmux environment saved字样表示 tmux 环境已保存 。
+    Tmux Resurrect 会将 Tmux 会话的详细信息以文本文件形式保存到 ~/.tmux/resurrect 目录 。
+
+- 手动还原tmux会话
+
+    前缀键(C-b) + C-r
